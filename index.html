@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" /> <!-- to fully scale on any device -->
+        <meta http-equiv="x-ua-compatible" content="ie=edge" />
+        <meta name="description" content="The best car deals on the web" />
+        <title>Car Deals</title>
+        <link rel="stylesheet" href="resources/material.red-indigo.min.css" />
+        <script src="resources/material.min.js"></script>
+        <link href="https://fonts.googleapis.com/css?family=Archivo+Narrow" rel="stylesheet" rel="preload" as="font">
+        <style>
+            body, input, textarea, select, button {
+                font-family: 'Archivo Narrow', sans-serif;
+            }
+            .center {
+                text-align: center;
+                padding: 10px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+            <header class="mdl-layout__header">
+                <div class="mdl-layout__header-row">
+                    <span class="mdl-layout-title">Car Deals</span>
+                    <div class="mdl-layout-spacer"></div>
+                    <nav class="mdl-navigation">
+                        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect">
+                            Refresh
+                        </button>
+                    </nav>
+                </div>
+            </header>
+            <main class="mdl-layout__content">
+                <div class="mdl-grid">
+                    <!-- Dynamic Data here -->
+                </div>
+                <div class="center">
+                    <button
+                        class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
+                        Show More
+                    </button>
+                </div>
+            </main>
+        </div>
+    </body>
+</html>
