@@ -9,6 +9,8 @@ define([], function() {
     }
 
     function appendCars(cars) {
+        document.getElementById('first-load').innerHTML = "";
+
         let cardHTML = "";
 
         for (let i = 0; i < cars.length; i++) {
