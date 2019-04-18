@@ -17,6 +17,22 @@
                 text-align: center;
                 padding: 10px;
             }
+            .mdl-card {
+                cursor: pointer;
+                color: #FFF;
+                height: 250px;
+                background-size: cover;
+            }
+            .mdl-card__title-text {
+                color: #FFF;
+                background-color: rgba(0,0,0,0.5);
+                padding: 15px;
+                position: absolute;
+                left: 0;
+                bottom: 0;
+                width: 100%;
+                box-sizing: border-box;
+            }
         </style>
     </head>
     <body>
@@ -45,4 +61,13 @@
             </main>
         </div>
     </body>
+    <script id="card-card" type="text/template">
+        <div
+            class="mdl-card mdl-cell mdl-cell--4-col mdl-shadow--6dp"
+            style="background-image: url('{{image}}')">
+            <div class="mdl-card__title">
+                <span class="mdl-card__title-text">{{title}} (${{price}})</span>
+            </div>
+        </div>
+    </script>
 </html>
