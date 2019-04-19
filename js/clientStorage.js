@@ -19,7 +19,7 @@ define([], function() {
         let index = keys.indexOf(lastItemId);
         if (index == -1) { index = keys.length };
         if (index == 0) {
-            return resolve([]);
+            return Promise.resolve([]);
         }
 
         let paginatedKeys = keys.splice(index - limit, limit);
