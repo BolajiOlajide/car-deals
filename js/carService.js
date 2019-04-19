@@ -26,11 +26,14 @@ define(['./template.js', './clientStorage.js'], function(template, clientStorage
         template.appendCars(cars);
     }
 
-    function loadCarPage(carId) {
-        return fetch(`${carDetailUrl}${carId}`)
-            .then(response => response.text())
-            .then(data => document.body.insertAdjacentHTML('beforeend', data))
-            .catch(() => alert(`Oops couldn't fetch Car ${carId}`));
+    async function loadCarPage(carId) {
+        try {
+            const response = await fetch(`${carDetailUrl}${carId}`);
+            const data = await response.text();
+            document.body.insertAdjacentHTML('beforeend', data);
+        } catch (error) {
+            alert(`Oops couldn't fetch Car ${carId}`);
+        }
     }
 
     return { loadMoreRequest, loadCarPage };
