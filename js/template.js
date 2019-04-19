@@ -15,10 +15,11 @@ define([], function() {
         let cardHTML = "";
 
         for (let i = 0; i < cars.length; i++) {
-            cardHTML += generateCarCard(cars[i].value);
+            cardHTML += generateCarCard(cars[i]);
         }
 
         document.querySelector('.mdl-grid').insertAdjacentHTML('beforeend', cardHTML);
+        // document.getElementById('show-more__button').style.display = 'block';
 
         document.querySelector('.mdl-layout__content').style.display = 'none';
         document.querySelector('.mdl-layout__content').style.display = 'inline-block';

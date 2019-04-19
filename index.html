@@ -69,7 +69,9 @@
                 <span class="mdl-layout-title">Car Deals</span>
                 <div class="mdl-layout-spacer"></div>
                 <nav class="mdl-navigation">
-                    <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect">
+                    <button
+                        class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent mdl-js-ripple-effect"
+                        onclick="location.reload()">
                         Refresh
                     </button>
                 </nav>
@@ -85,11 +87,15 @@
                 </svg>
                 <p>Parking your car deals</p>
             </div>
+            <div id="connection-status" class="center"></div>
             <div class="mdl-grid">
                 <!-- Dynamic Data here -->
             </div>
-            <div class="center">
-                <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect">
+            <div class="center" id="show-more__button">
+                <button
+                    class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect"
+                    onclick="pageEvents.loadMore()"
+                >
                     Show More
                 </button>
             </div>
@@ -107,6 +113,9 @@
         </div>
     </script>
 <script src="resources/system.js"></script>
+<script src="resources/localforage.min.js"></script>
+<script src="resources/localforage-getitems.js"></script>
+<script src="resources/localforage-setitems.js"></script>
 <script>
     System.import('./js/app.js');
 </script>
