@@ -15,11 +15,9 @@ define(['./template.js', './clientStorage.js'], function (template, clientStorag
       const response = await fetch(`${latestDealsUrl}?carId=${clientStorage.getLastCarId()}`)
       const jsonResponse = await response.json();
       jsonResponse.cars.forEach(preCacheDetailsPage);
-      console.log(jsonResponse.cars.length);
       await clientStorage.addCars(jsonResponse.cars)
       return 'Connection is OK. Showing latest results.';
     } catch (error) {
-      console.log(error.message, '<==========');
       return 'No connection. Showing offline results.';
     }
   }
@@ -42,7 +40,6 @@ define(['./template.js', './clientStorage.js'], function (template, clientStorag
   async function preCacheDetailsPage(car) {
     if ('serviceWorker' in navigator) {
       const currentCarDetailsUrl = `${carDetailUrl}${car.value.details_id}`;
-      console.log(currentCarDetailsUrl);
       const cache = await window.caches.open('carDealsCachePagesV1');
       const response = await cache.match(currentCarDetailsUrl);
       if (!response) cache.add(new Request(currentCarDetailsUrl));
