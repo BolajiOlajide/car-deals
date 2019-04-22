@@ -1,5 +1,7 @@
 'use strict';
 
+// random comment to trigger sw update - and hope it works 🤞
+
 const carDealsCacheName = 'carDealsCacheV1';
 const carDealsCachePagesName = 'carDealsCachePagesV1';
 
@@ -43,11 +45,15 @@ const carDealsCacheFiles = [
   'assets/ms-icon-310x310.png',
   'manifest.json',
   'index.html',
-  'sw.js'
+  'sw.js' // - not sure we should be caching this
 ];
 
 self.addEventListener('install', async (event) => {
   console.log('From SW: Install Event', event);
+  self.skipWaiting(); // ti auto update the current service worker whenever it is updated
+  // this helps with renewing the service workers and ensure changes take effect in existing
+  // tabs
+
   // this will extend the install time until caching is done
   event.waitUntil(
     // best place to cache is during the install stage and in the listener
@@ -62,6 +68,8 @@ self.addEventListener('install', async (event) => {
 
 self.addEventListener('activate', event => {
   console.log('From SW: Activate State', event);
+  self.clients.claim(); // reason same as self.skipWaiting();
+
   event.waitUntil(
     caches.keys()
       .then(cacheKeys => {
