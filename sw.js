@@ -4,7 +4,11 @@
 
 const carDealsCacheName = 'carDealsCacheV1';
 const carDealsCachePagesName = 'carDealsCachePagesV1';
-const carDealsCacheImageName = 'carDealsCacheImagesV1'
+const carDealsCacheImageName = 'carDealsCacheImagesV1';
+
+const latestPath = '/pluralsight/courses/progressive-web-apps/service/latest-deals.php';
+const imagePath = '/pluralsight/courses/progressive-web-apps/service/car-image.php';
+const carPath = '/pluralsight/courses/progressive-web-apps/service/car.php';
 
 // you can precache files from another origin/ cdn
 const carDealsCacheFiles = [
@@ -93,7 +97,45 @@ self.addEventListener('fetch', (event) => {
   const requestPath = requestUrl.pathname;
   const filename = requestPath.substring(requestPath.lastIndexOf('/') + 1);
 
-  if (requestUrl == latestPath || filename == 'sw.js') {
+  if (requestPath == latestPath || filename == 'sw.js') {
     event.respondWith(fetch(event.request));
+  } else if (requestPath == imagePath) {
+    event.respondWith(networkFirstStrategy(event.request));
+  } else {
+    event.respondWith(cacheFirstStrategy(event.request));
   }
 });
+
+const cacheFirstStrategy = async (request) => {
+  const cacheResponse = await caches.match(request);
+  return cacheResponse || fetchRequestAndCache(request);
+}
+
+const networkFirstStrategy = async (request) => {
+  try {
+    return fetchRequestAndCache(request);
+  } catch (error) {
+    return caches.match(request);
+  }
+}
+
+const fetchRequestAndCache = async (request) => {
+  const networkResponse = await fetch(request);
+  const cache = await caches.open(getCacheName(request));
+  const clonedResponse = networkResponse.clone();
+  cache.put(request, networkResponse);
+  return clonedResponse;
+}
+
+const getCacheName = request => {
+  const requestUrl = new URL(request.url);
+  const requestPath = requestUrl.pathname;
+
+  if (requestPath == imagePath) {
+    return carDealsCacheImageName;
+  } else if (requestPath == carPath) {
+    return carDealsCachePagesName;
+  } else {
+    return carDealsCacheName;
+  }
+}
