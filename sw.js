@@ -4,7 +4,9 @@
 
 const carDealsCacheName = 'carDealsCacheV1';
 const carDealsCachePagesName = 'carDealsCachePagesV1';
+const carDealsCacheImageName = 'carDealsCacheImagesV1'
 
+// you can precache files from another origin/ cdn
 const carDealsCacheFiles = [
   'js/app.js',
   'js/carService.js',
@@ -43,9 +45,8 @@ const carDealsCacheFiles = [
   'assets/ms-icon-144x144.png',
   'assets/ms-icon-150x150.png',
   'assets/ms-icon-310x310.png',
-  'manifest.json',
-  'index.html',
-  'sw.js' // - not sure we should be caching this
+  './',
+  // 'sw.js' // - not sure we should be caching this
 ];
 
 self.addEventListener('install', async (event) => {
@@ -75,11 +76,24 @@ self.addEventListener('activate', event => {
       .then(cacheKeys => {
         const deletePromises = [];
         for (let i = 0; i < cacheKeys.length; i++) {
-          if (cacheKeys[i] != carDealsCacheName && cacheKeys[i] != carDealsCachePagesName) {
+          if (cacheKeys[i] != carDealsCacheName && cacheKeys[i] != carDealsCachePagesName && cacheKeys[i] != carDealsCacheImageName) {
             deletePromises.push(caches.delete(cacheKeys[i]));
           }
         }
         return Promise.all(deletePromises);
       })
   );
+});
+
+self.addEventListener('fetch', (event) => {
+  // to intercept a fetch requesr, check this
+  // event.respondWith(new Response('<h1>Hello! You\'ve been punked!</h1>'));
+
+  const requestUrl = new URL(event.request.url);
+  const requestPath = requestUrl.pathname;
+  const filename = requestPath.substring(requestPath.lastIndexOf('/') + 1);
+
+  if (requestUrl == latestPath || filename == 'sw.js') {
+    event.respondWith(fetch(event.request));
+  }
 });
